@@ -27,17 +27,17 @@ public class SkillController {
     @PostMapping("add")
     public String processAddSkillsForm(@ModelAttribute @Valid Skill newSkill,
                                          Errors errors, Model model) {
-
         if (errors.hasErrors()) {
-            model.addAttribute("add",skillRepository.save(newSkill));
+            model.addAttribute("title", "Add Skill");
+            model.addAttribute("add", newSkill);
             return "skills/add";
         }
-        return "redirect:";
+        skillRepository.save(newSkill);
+        return "skills/view";
     }
 
     @GetMapping("view/{skillId}")
     public String displayViewSkill(Model model, @PathVariable int skillId) {
-
         Optional optSkill = skillRepository.findById(skillId);
         if (optSkill.isPresent()) {
             Skill skill = (Skill) optSkill.get();
