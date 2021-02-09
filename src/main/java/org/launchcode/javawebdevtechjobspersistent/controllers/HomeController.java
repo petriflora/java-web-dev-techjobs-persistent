@@ -2,6 +2,7 @@ package org.launchcode.javawebdevtechjobspersistent.controllers;
 
 import org.launchcode.javawebdevtechjobspersistent.models.Employer;
 import org.launchcode.javawebdevtechjobspersistent.models.Job;
+import org.launchcode.javawebdevtechjobspersistent.models.Skill;
 import org.launchcode.javawebdevtechjobspersistent.models.data.EmployerRepository;
 import org.launchcode.javawebdevtechjobspersistent.models.data.JobRepository;
 import org.launchcode.javawebdevtechjobspersistent.models.data.SkillRepository;
@@ -51,8 +52,7 @@ public class HomeController {
     public String processAddJobForm(@ModelAttribute Job newJob,
                                     Errors errors, Model model,
                                     @RequestParam(required = true) Integer employer,
-//                                    @RequestParam List<Integer> skills) // this was the original code - commented out to compile and changed line below to String
-                                    @RequestParam String skills) {
+                                    @RequestParam(required = false) List<Integer> skills) {
 
         if (errors.hasErrors()) {
             model.addAttribute("title", "Add Job");
@@ -60,12 +60,13 @@ public class HomeController {
         }
         model.addAttribute("title", "Add Job");
         Employer result = employerRepository.findById(employer).orElse(null);
-        Job addJob = new Job(newJob.getName(), result, skills);
+        List<Skill> skillObjs = (List<Skill>) skillRepository.findAllById(skills);
+        Job addJob = new Job(newJob.getName(), result, skillObjs);
         jobRepository.save(addJob);
         model.addAttribute(new Job());
         model.addAttribute("employers", employerRepository.findAll());
         model.addAttribute("skills", skillRepository.findAll());
-        return "redirect:";
+        return "view";
     }
 
     @GetMapping("view/{jobId}")

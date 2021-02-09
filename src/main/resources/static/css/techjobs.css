@@ -64,3 +64,8 @@ div.job-listing {
 .error {
 color: red;
 }
+
+button {
+text-align: center;
+text-color: #222222;
+}
