@@ -8,13 +8,28 @@
 
 <div class="container body-content">
     <h2>TechJobs</h2>
-    <ul>
-        <li th:each="job : ${jobs}">
-            <a th:href="@{'/view/' + ${job.id}}" th:text="${job.name}"></a>
-        </li>
-    </ul>
+    <table>
+       <thead>
+        <tr>
+            <th>Job Name</th>
+            <th>Employer</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr></tr>
+        <tr th:each="job : ${jobs}">
+            <td>
+                <a th:href="@{'/view/' + ${job.id}}" th:text="${job.name}"></a></p>
+            </td>
+            <td>
+                <a th:href="@{/list/jobs(column=employer,value=${job.employer.name})}" th:text="${job.employer.name}"></a></p>
+            </td>
+        </tr>
+        </tbody>
+    </table>
 
 </div>
 
 </body>
 </html>
+

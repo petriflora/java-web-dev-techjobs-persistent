@@ -11,6 +11,7 @@
     <p th:text="${'Employer ID: ' + employer.id}"></p>
     <p th:text="${'Name: ' + employer.name}"></p>
     <p th:text="${'Location: ' + employer.location}"></p>
+    <p> <a th:href="@{/list/jobs(column=employer,value=${employer.name})}">View Available Jobs</a></p>
 </div>
 
 

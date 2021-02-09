@@ -33,9 +33,8 @@ public class HomeController {
 
     @RequestMapping("")
     public String index(Model model) {
-
         model.addAttribute("title", "My Jobs");
-
+        model.addAttribute("jobs", jobRepository.findAll());
         return "index";
     }
 
@@ -63,9 +62,7 @@ public class HomeController {
         List<Skill> skillObjs = (List<Skill>) skillRepository.findAllById(skills);
         Job addJob = new Job(newJob.getName(), result, skillObjs);
         jobRepository.save(addJob);
-        model.addAttribute(new Job());
-        model.addAttribute("employers", employerRepository.findAll());
-        model.addAttribute("skills", skillRepository.findAll());
+        model.addAttribute("job", addJob);
         return "view";
     }
 
